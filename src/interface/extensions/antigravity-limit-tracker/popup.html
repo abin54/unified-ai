@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>AI Usage Dashboard</title>
+    <!-- Preload fonts for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <!-- Google Fonts with display=block to prevent FOUT -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=block" rel="stylesheet"/>
+    <!-- Material Icons with display=block -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet"/>
+    <!-- Local Styles -->
+    <link href="styles.css" rel="stylesheet"/>
+</head>
+<body>
+    <!-- Preloader - shown until fonts are loaded -->
+    <div id="preloader" class="preloader">
+        <svg class="preloader-spinner" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="#27272a" stroke-width="3"/>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke="#0fbd83" stroke-width="3" stroke-linecap="round">
+                <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/>
+            </path>
+        </svg>
+    </div>
+
+    <!-- Popup Container -->
+    <div class="popup-container">
+
+        <!-- Sticky Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="header-icon">
+                    <span class="material-symbols-outlined">monitoring</span>
+                </div>
+                <h1 class="header-title">AI Usage Dashboard</h1>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <button id="settingsButton" class="filter-button" title="Settings">
+                    <span class="material-symbols-outlined">settings</span>
+                </button>
+                <button id="filterButton" class="filter-button" title="Filter Models">
+                    <span class="material-symbols-outlined">filter_list</span>
+                    <div id="filterBadgeDot" class="filter-badge-dot"></div>
+                </button>
+            </div>
+        </header>
+
+        <!-- Filter Panel -->
+        <div id="filterPanel" class="filter-panel">
+            <div class="filter-content">
+                <div class="filter-header">
+                    <span class="filter-title">Filter by Model</span>
+                    <div class="filter-actions">
+                        <button id="selectAllBtn" class="filter-action-btn">All</button>
+                        <button id="clearFiltersBtn" class="filter-action-btn">Clear</button>
+                    </div>
+                </div>
+                <div id="filterOptions" class="filter-options">
+                    <!-- Dynamic Options -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Panel -->
+        <div id="settingsPanel" class="filter-panel">
+            <div class="filter-content">
+                <div class="filter-header">
+                    <span class="filter-title">Settings</span>
+                </div>
+                <div class="settings-form">
+                    <label class="settings-label">
+                        <span class="settings-label-text">API URL</span>
+                        <input type="text" id="apiUrlInput" class="settings-input" placeholder="http://localhost:8080/account-limits">
+                    </label>
+                    <label class="settings-label">
+                        <span class="settings-label-text">Sort Accounts By</span>
+                        <select id="sortSelect" class="settings-select">
+                            <option value="id-asc">Account ID (A-Z)</option>
+                            <option value="id-desc">Account ID (Z-A)</option>
+                            <option value="lastUsed-desc">Last Used (Recent First)</option>
+                            <option value="lastUsed-asc">Last Used (Oldest First)</option>
+                            <option value="limit-desc">Avg Remaining (High to Low)</option>
+                            <option value="limit-asc">Avg Remaining (Low to High)</option>
+                        </select>
+                    </label>
+                    <label class="settings-toggle">
+                        <span class="settings-label-text">Hide Disabled Accounts</span>
+                        <input type="checkbox" id="hideDisabledCheckbox" class="toggle-input">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <label class="settings-toggle">
+                        <span class="settings-label-text">Blur Email Addresses</span>
+                        <input type="checkbox" id="blurEmailsCheckbox" class="toggle-input">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <div class="settings-actions">
+                        <button id="resetSettingsBtn" class="filter-action-btn">Reset All</button>
+                        <button id="saveSettingsBtn" class="filter-action-btn primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Content -->
+        <main id="accountsContainer" class="main-content">
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state">
+                <div class="loading-spinner">
+                    <span class="material-symbols-outlined">progress_activity</span>
+                </div>
+                <span class="loading-text">Loading accounts...</span>
+            </div>
+        </main>
+
+        <!-- Sticky Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <button id="syncButton" class="sync-button">
+                        <span class="material-symbols-outlined">refresh</span>
+                        <span>Sync Now</span>
+                    </button>
+                    <span id="totalAccounts" class="total-accounts">0 accounts</span>
+                </div>
+                <p id="lastUpdated" class="last-updated">Last updated: -</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Claude Code settings
+.claude/
+
+# Build outputs (if any)
+dist/
+build/
+*.zip
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+*.temp
+
+# Private files
+claude.svg
+code.html
+prd.md

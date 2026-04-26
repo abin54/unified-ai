@@ -1,0 +1,24 @@
+{
+  "roles": {
+    "Architect": {
+      "description": "Handles high-level planning, system architecture, and dependency mapping.",
+      "primary_skills": ["memory", "orchestration"],
+      "protocols": ["Protocol ALPHA", "Protocol BETA"]
+    },
+    "Engineer": {
+      "description": "Responsible for code implementation, refactoring, and integration.",
+      "primary_skills": ["coding", "ml"],
+      "protocols": ["Protocol GAMMA"]
+    },
+    "Security_Auditor": {
+      "description": "Audits code for vulnerabilities and performs security research.",
+      "primary_skills": ["security"],
+      "protocols": ["Protocol ALPHA"]
+    },
+    "Librarian": {
+      "description": "Manages the RAG knowledge base and indexes codebase changes.",
+      "primary_skills": ["memory"],
+      "protocols": ["Protocol BETA"]
+    }
+  }
+}

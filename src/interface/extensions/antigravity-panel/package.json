@@ -1,0 +1,454 @@
+{
+  "name": "antigravity-panel",
+  "displayName": "Toolkit for Antigravity",
+  "description": "%extension.description%",
+  "version": "2.5.13",
+  "publisher": "n2ns",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/n2ns/antigravity-panel.git"
+  },
+  "homepage": "https://datafrog.io",
+  "keywords": [
+    "Antigravity",
+    "Antigravity Panel",
+    "Gemini",
+    "DeepMind",
+    "Quota Monitor",
+    "Quota",
+    "AI Agent",
+    "Google AI",
+    "Toolkit",
+    "Panel",
+    "Dashboard"
+  ],
+  "icon": "assets/icon.png",
+  "engines": {
+    "vscode": "^1.104.0"
+  },
+  "l10n": "./l10n",
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "tfa-sidebar",
+          "title": "%viewsContainers.tfa-sidebar.title%",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "tfa-sidebar": [
+        {
+          "type": "webview",
+          "id": "tfa.sidebar",
+          "name": "%views.tfa.sidebar.name%",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "tfa.openPanel",
+        "title": "%command.openPanel.title%",
+        "category": "%extension.category%"
+      },
+      {
+        "command": "tfa.showCacheSize",
+        "title": "%command.showCacheSize.title%",
+        "category": "%extension.category%"
+      },
+      {
+        "command": "tfa.cleanCache",
+        "title": "%command.cleanCache.title%",
+        "category": "%extension.category%",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "tfa.refreshQuota",
+        "title": "%command.refreshQuota.title%",
+        "category": "%extension.category%",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "tfa.showDisclaimer",
+        "title": "%command.showDisclaimer.title%",
+        "category": "%extension.category%",
+        "icon": "$(info)"
+      },
+      {
+        "command": "tfa.openSettings",
+        "title": "%command.openSettings.title%",
+        "category": "%extension.category%",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "tfa.restartLanguageServer",
+        "title": "%command.restartLanguageServer.title%",
+        "category": "%extension.category%",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "tfa.restartUserStatusUpdater",
+        "title": "%command.restartUserStatusUpdater.title%",
+        "category": "%extension.category%",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "tfa.runDiagnostics",
+        "title": "%command.runDiagnostics.title%",
+        "category": "%extension.category%",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "tfa.showLogs",
+        "title": "%command.showLogs.title%",
+        "category": "%extension.category%",
+        "icon": "$(output)"
+      },
+      {
+        "command": "tfa.toggleAutoAccept",
+        "title": "%command.toggleAutoAccept.title%",
+        "category": "%extension.category%",
+        "icon": "$(check-all)"
+      },
+      {
+        "command": "tfa.generateCommitMessageClaude",
+        "title": "%command.generateCommitMessageClaude.title%",
+        "category": "%extension.category%",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "tfa.setAnthropicApiKey",
+        "title": "%command.setAnthropicApiKey.title%",
+        "category": "%extension.category%",
+        "icon": "$(key)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "tfa.refreshQuota",
+          "when": "view == tfa.sidebar",
+          "group": "navigation@3"
+        },
+        {
+          "command": "tfa.showDisclaimer",
+          "when": "view == tfa.sidebar",
+          "group": "navigation@1"
+        },
+        {
+          "command": "tfa.openSettings",
+          "when": "view == tfa.sidebar",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "configuration": [
+      {
+        "title": "%config.title.dashboard%",
+        "properties": {
+          "tfa.dashboard.gaugeStyle": {
+            "type": "string",
+            "default": "semi-arc",
+            "order": 10,
+            "enum": [
+              "semi-arc",
+              "classic-donut"
+            ],
+            "enumDescriptions": [
+              "%config.quotaDisplayStyle.semi-arc%",
+              "%config.quotaDisplayStyle.classic-donut%"
+            ],
+            "description": "%config.dashboard.gaugeStyle.description%"
+          },
+          "tfa.dashboard.uiScale": {
+            "type": "number",
+            "default": 1,
+            "minimum": 0.8,
+            "maximum": 2,
+            "order": 15,
+            "description": "%config.dashboard.uiScale.description%"
+          },
+          "tfa.dashboard.showUserInfoCard": {
+            "type": "boolean",
+            "default": true,
+            "order": 60,
+            "description": "%config.dashboard.showUserInfoCard.description%"
+          },
+          "tfa.dashboard.showCreditsCard": {
+            "type": "boolean",
+            "default": true,
+            "order": 65,
+            "description": "%config.dashboard.showCreditsCard.description%"
+          },
+          "tfa.dashboard.viewMode": {
+            "type": "string",
+            "default": "groups",
+            "order": 20,
+            "enum": [
+              "groups",
+              "models"
+            ],
+            "enumDescriptions": [
+              "%config.visualizationMode.groups%",
+              "%config.visualizationMode.models%"
+            ],
+            "description": "%config.dashboard.viewMode.description%"
+          },
+          "tfa.dashboard.historyRange": {
+            "type": "number",
+            "default": 90,
+            "minimum": 10,
+            "maximum": 120,
+            "order": 30,
+            "description": "%config.dashboard.historyRange.description%"
+          },
+          "tfa.dashboard.refreshRate": {
+            "type": "number",
+            "default": 90,
+            "minimum": 30,
+            "order": 40,
+            "description": "%config.dashboard.refreshRate.description%"
+          },
+          "tfa.dashboard.includeSecondaryModels": {
+            "type": "boolean",
+            "default": false,
+            "order": 50,
+            "description": "%config.dashboard.includeSecondaryModels.description%"
+          }
+        }
+      },
+      {
+        "title": "%config.title.status%",
+        "properties": {
+          "tfa.status.showQuota": {
+            "type": "boolean",
+            "default": true,
+            "order": 10,
+            "description": "%config.status.showQuota.description%"
+          },
+          "tfa.status.showCache": {
+            "type": "boolean",
+            "default": true,
+            "order": 20,
+            "description": "%config.status.showCache.description%"
+          },
+          "tfa.status.displayFormat": {
+            "type": "string",
+            "default": "percentage",
+            "order": 30,
+            "enum": [
+              "percentage",
+              "resetTime",
+              "resetTimestamp",
+              "used",
+              "remaining"
+            ],
+            "enumDescriptions": [
+              "%config.statusBarStyle.percentage%",
+              "%config.statusBarStyle.resetTime%",
+              "%config.statusBarStyle.resetTimestamp%",
+              "%config.statusBarStyle.used%",
+              "%config.statusBarStyle.remaining%"
+            ],
+            "description": "%config.status.displayFormat.description%"
+          },
+          "tfa.status.scope": {
+            "type": "string",
+            "default": "all",
+            "order": 35,
+            "enum": [
+              "primary",
+              "all"
+            ],
+            "enumDescriptions": [
+              "%config.status.scope.primary%",
+              "%config.status.scope.all%"
+            ],
+            "description": "%config.status.scope.description%"
+          },
+          "tfa.status.warningThreshold": {
+            "type": "number",
+            "default": 40,
+            "minimum": 5,
+            "maximum": 100,
+            "order": 40,
+            "description": "%config.status.warningThreshold.description%"
+          },
+          "tfa.status.criticalThreshold": {
+            "type": "number",
+            "default": 20,
+            "minimum": 1,
+            "maximum": 50,
+            "order": 50,
+            "description": "%config.status.criticalThreshold.description%"
+          }
+        }
+      },
+      {
+        "title": "%config.title.cache%",
+        "properties": {
+          "tfa.cache.autoClean": {
+            "type": "boolean",
+            "default": false,
+            "order": 10,
+            "description": "%config.cache.autoClean.description%"
+          },
+          "tfa.cache.autoCleanKeepCount": {
+            "type": "number",
+            "default": 5,
+            "minimum": 1,
+            "maximum": 50,
+            "order": 20,
+            "description": "%config.cache.autoCleanKeepCount.description%"
+          },
+          "tfa.cache.scanInterval": {
+            "type": "number",
+            "default": 120,
+            "minimum": 30,
+            "maximum": 600,
+            "order": 30,
+            "description": "%config.cache.scanInterval.description%"
+          },
+          "tfa.cache.warningSize": {
+            "type": "number",
+            "default": 500,
+            "minimum": 100,
+            "order": 40,
+            "description": "%config.cache.warningSize.description%"
+          },
+          "tfa.cache.hideEmptyFolders": {
+            "type": "boolean",
+            "default": false,
+            "order": 50,
+            "description": "%config.cache.hideEmptyFolders.description%"
+          }
+        }
+      },
+      {
+        "title": "%config.title.system%",
+        "properties": {
+          "tfa.system.serverHost": {
+            "type": "string",
+            "default": "127.0.0.1",
+            "order": 10,
+            "description": "%config.system.serverHost.description%"
+          },
+          "tfa.system.apiPath": {
+            "type": "string",
+            "default": "/exa.language_server_pb.LanguageServerService/GetUserStatus",
+            "order": 20,
+            "description": "%config.system.apiPath.description%"
+          },
+          "tfa.system.debugMode": {
+            "type": "boolean",
+            "default": true,
+            "order": 99,
+            "description": "%config.system.debugMode.description%"
+          },
+          "tfa.system.autoAccept": {
+            "type": "boolean",
+            "default": false,
+            "order": 30,
+            "description": "%config.system.autoAccept.description%"
+          },
+          "tfa.system.autoAcceptInterval": {
+            "type": "number",
+            "default": 800,
+            "minimum": 200,
+            "maximum": 5000,
+            "order": 31,
+            "description": "%config.system.autoAcceptInterval.description%"
+          }
+        }
+      },
+      {
+        "title": "%config.title.commitMessage%",
+        "properties": {
+          "tfa.commitMessageClaude.endpoint": {
+            "type": "string",
+            "default": "http://localhost:11434/api/generate",
+            "order": 5,
+            "description": "%config.commitMessageClaude.endpoint.description%"
+          },
+          "tfa.commitMessageClaude.model": {
+            "type": "string",
+            "default": "llama3.2",
+            "order": 10,
+            "description": "%config.commitMessageClaude.model.description%"
+          },
+          "tfa.commitMessageClaude.maxDiffChars": {
+            "type": "number",
+            "default": 80000,
+            "minimum": 1000,
+            "maximum": 200000,
+            "order": 20,
+            "description": "%config.commitMessageClaude.maxDiffChars.description%"
+          },
+          "tfa.commitMessageClaude.format": {
+            "type": "string",
+            "default": "conventional",
+            "order": 30,
+            "enum": [
+              "conventional",
+              "simple"
+            ],
+            "enumDescriptions": [
+              "%config.commitMessageClaude.format.conventional%",
+              "%config.commitMessageClaude.format.simple%"
+            ],
+            "description": "%config.commitMessageClaude.format.description%"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node ./esbuild.js",
+    "watch": "node ./esbuild.js --watch --sourcemap",
+    "vscode:prepublish": "npm run build",
+    "lint": "eslint src --ext .ts",
+    "test": "tsc -p tsconfig.test.json && node ./out/test/runUnitTests.js",
+    "test:server": "tsc -p tsconfig.test.json && node ./out/test/runServerTests.js",
+    "package": "vsce package",
+    "postpackage": "node ./scripts/sync-build.js",
+    "package:sync": "npm run package",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.10.1",
+    "@types/sinon": "^21.0.0",
+    "@types/vscode": "^1.104.0",
+    "@types/ws": "^8.5.10",
+    "@typescript-eslint/eslint-plugin": "^8.50.1",
+    "@typescript-eslint/parser": "^8.50.1",
+    "@vscode/vsce": "^3.7.1",
+    "canvas": "^3.2.0",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
+    "glob": "^13.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "mocha": "^11.3.0",
+    "sinon": "^21.0.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.1"
+  },
+  "dependencies": {
+    "@vscode/codicons": "^0.0.44",
+    "lit": "^3.3.2",
+    "ws": "^8.17.0"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix --no-warn-ignored"
+    ]
+  }
+}

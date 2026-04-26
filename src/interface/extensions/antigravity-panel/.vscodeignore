@@ -1,0 +1,59 @@
+# Source files (bundled into dist/)
+src/**
+out/**
+*.ts
+*.map
+
+# Test files
+test/**
+src/test/**
+
+# Build and development files
+.vscode/**
+.vscode-test/**
+.github/**
+scripts/**
+src/scripts/**
+local_bak/**
+docs/**
+!docs/DISCLAIMER*.md
+.husky/**
+.husky/**/*
+**/.husky/**
+
+# Configuration files
+tsconfig.json
+tsconfig.test.json
+.eslintrc.json
+.eslintignore
+eslint.config.mjs
+.gitignore
+.gitattributes
+esbuild.js
+package-lock.json
+
+# All node_modules (dependencies are bundled into dist/)
+node_modules/**
+
+# Exception: Include codicons font files for webview
+!node_modules/@vscode/codicons/dist/codicon.css
+!node_modules/@vscode/codicons/dist/codicon.ttf
+
+# Documentation (keep only essential ones in English)
+README_zh.md
+CHANGELOG_zh.md
+DEVELOPMENT_HISTORY.md
+
+# README preview images (vsce auto-converts relative paths to GitHub raw URLs)
+assets/preview*.png
+
+# Misc
+.DS_Store
+*.vsix
+*.log
+.editorconfig
+.npmrc
+.agent/**
+.cursor/**
+check-l10n.js
+

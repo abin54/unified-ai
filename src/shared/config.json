@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@zilliz/claude-context-mcp"]
+    },
+    "security": {
+      "command": "python",
+      "args": ["src/skills/security/mcp_server.py"]
+    }
+  },
+  "automation": {
+    "protocol_delta_enabled": true,
+    "frontend_path": "src/interface/web",
+    "backend_path": "src/skills"
+  }
+}

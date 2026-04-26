@@ -1,0 +1,18 @@
+{
+  "output": {
+    "filePath": "context_bundle.txt",
+    "header": "Unified AI Codebase Context Bundle",
+    "showLineNumbers": true
+  },
+  "include": [
+    "src/**/*",
+    "agent_config.md",
+    "README.md"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/venv/**",
+    "**/*.lock"
+  ]
+}

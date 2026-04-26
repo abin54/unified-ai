@@ -1,0 +1,150 @@
+import { describe, it, expect } from "vitest";
+import { formatNumber, formatCost, formatTrend, formatStatus, formatMetricType, formatErrorMessage, formatRelativeTime, formatTime, formatDuration } from "../../src/services/formatters";
+
+describe("formatNumber", () => {
+  it("formats millions", () => {
+    expect(formatNumber(1_200_000)).toBe("1.2M");
+    expect(formatNumber(5_000_000)).toBe("5M");
+  });
+  it("formats thousands", () => {
+    expect(formatNumber(1_500)).toBe("1.5k");
+    expect(formatNumber(304_300)).toBe("304.3k");
+  });
+  it("returns plain number below 1000", () => {
+    expect(formatNumber(42)).toBe("42");
+    expect(formatNumber(999)).toBe("999");
+    expect(formatNumber(0)).toBe("0");
+  });
+});
+
+describe("formatCost", () => {
+  it("formats with dollar sign and 2 decimals", () => {
+    expect(formatCost(6.18)).toBe("$6.18");
+    expect(formatCost(0)).toBe("$0.00");
+    expect(formatCost(17.5)).toBe("$17.50");
+  });
+  it("returns null for negative costs (invalid pricing)", () => {
+    expect(formatCost(-1527)).toBeNull();
+    expect(formatCost(-0.01)).toBeNull();
+    expect(formatCost(-9909)).toBeNull();
+  });
+  it("returns '< $0.01' for sub-cent positive costs", () => {
+    expect(formatCost(0.002836)).toBe("< $0.01");
+    expect(formatCost(0.009)).toBe("< $0.01");
+    expect(formatCost(0.001)).toBe("< $0.01");
+  });
+  it("formats costs at or above one cent normally", () => {
+    expect(formatCost(0.01)).toBe("$0.01");
+    expect(formatCost(0.05)).toBe("$0.05");
+  });
+});
+
+describe("formatTrend", () => {
+  it("adds + for positive", () => {
+    expect(formatTrend(18.4)).toBe("+18%");
+  });
+  it("shows - for negative", () => {
+    expect(formatTrend(-7.2)).toBe("-7%");
+  });
+  it("adds + for zero", () => {
+    expect(formatTrend(0)).toBe("+0%");
+  });
+});
+
+describe("formatStatus", () => {
+  it("maps known statuses", () => {
+    expect(formatStatus("ok")).toBe("Success");
+    expect(formatStatus("retry")).toBe("Retried");
+    expect(formatStatus("error")).toBe("Failed");
+    expect(formatStatus("rate_limited")).toBe("Rate Limited");
+    expect(formatStatus("fallback_error")).toBe("Handled");
+  });
+  it("handles case insensitive", () => {
+    expect(formatStatus("OK")).toBe("Success");
+    expect(formatStatus("Error")).toBe("Failed");
+  });
+  it("returns original for unknown status", () => {
+    expect(formatStatus("custom")).toBe("custom");
+  });
+});
+
+describe("formatMetricType", () => {
+  it("maps known metric types", () => {
+    expect(formatMetricType("tokens")).toBe("Token usage");
+    expect(formatMetricType("cost")).toBe("Cost");
+  });
+  it("returns original for unknown type", () => {
+    expect(formatMetricType("latency")).toBe("latency");
+  });
+});
+
+describe("formatErrorMessage", () => {
+  it("extracts message and code from OpenRouter JSON", () => {
+    const raw = '{"error":{"message":"Missing Authentication header","code":401}}';
+    expect(formatErrorMessage(raw)).toBe("Missing Authentication header (401)");
+  });
+  it("extracts message and code from OpenAI-style JSON", () => {
+    const raw = '{"error":{"message":"Invalid API key","type":"invalid_request_error","code":"invalid_api_key"}}';
+    expect(formatErrorMessage(raw)).toBe("Invalid API key (invalid_api_key)");
+  });
+  it("extracts message from Anthropic nested JSON", () => {
+    const raw = '{"type":"error","error":{"type":"authentication_error","message":"invalid x-api-key"}}';
+    expect(formatErrorMessage(raw)).toBe("invalid x-api-key (authentication_error)");
+  });
+  it("extracts message without code when code is absent", () => {
+    const raw = '{"error":{"message":"Something went wrong"}}';
+    expect(formatErrorMessage(raw)).toBe("Something went wrong");
+  });
+  it("returns raw string for plain text errors", () => {
+    expect(formatErrorMessage("timeout")).toBe("timeout");
+    expect(formatErrorMessage("connection refused")).toBe("connection refused");
+  });
+  it("returns raw string for invalid JSON", () => {
+    expect(formatErrorMessage("{bad json")).toBe("{bad json");
+  });
+});
+
+describe("formatTime", () => {
+  it("formats a UTC timestamp with date and time", () => {
+    const result = formatTime("2024-01-15T09:22:41Z");
+    expect(result).toMatch(/\w+ \d+, \d{2}:\d{2}:\d{2}/);
+  });
+  it("handles space-separated timestamp", () => {
+    const result = formatTime("2024-01-15 09:22:41");
+    expect(result).toMatch(/\w+ \d+, \d{2}:\d{2}:\d{2}/);
+  });
+});
+
+describe("formatDuration", () => {
+  it("formats sub-second durations in milliseconds", () => {
+    expect(formatDuration(0)).toBe("0ms");
+    expect(formatDuration(423)).toBe("423ms");
+    expect(formatDuration(999)).toBe("999ms");
+  });
+  it("formats durations at or above one second", () => {
+    expect(formatDuration(1000)).toBe("1.0s");
+    expect(formatDuration(1200)).toBe("1.2s");
+    expect(formatDuration(5500)).toBe("5.5s");
+  });
+});
+
+describe("formatRelativeTime", () => {
+  it("returns date+time string for today", () => {
+    const now = new Date();
+    const ts = now.toISOString();
+    const result = formatRelativeTime(ts);
+    expect(result).toMatch(/\w+ \d+, \d{2}:\d{2}:\d{2}/);
+  });
+  it("returns Yesterday for yesterday", () => {
+    const yesterday = new Date(Date.now() - 86_400_000 - 1000);
+    const ts = yesterday.toISOString();
+    const result = formatRelativeTime(ts);
+    expect(result).toBe("Yesterday");
+  });
+  it("returns date for older dates", () => {
+    const oldDate = new Date(Date.now() - 5 * 86_400_000);
+    const ts = oldDate.toISOString();
+    const result = formatRelativeTime(ts);
+    expect(result).toMatch(/\w+ \d+/);
+  });
+});

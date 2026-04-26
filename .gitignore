@@ -1,0 +1,16 @@
+# Ignore large files
+unified_ai_master_pack.md
+context_bundle.txt
+node_modules/
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/
+dist/
+build/
+.cache/
+.vscode/
+*.lock
+pnpm-lock.yaml
+package-lock.json
