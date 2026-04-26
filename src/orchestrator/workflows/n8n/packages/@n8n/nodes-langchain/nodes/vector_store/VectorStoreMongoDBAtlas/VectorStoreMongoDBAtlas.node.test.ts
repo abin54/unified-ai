@@ -114,8 +114,8 @@ describe('VectorStoreMongoDBAtlas', () => {
 			mockContext.getCredentials.mockResolvedValue({
 				configurationType: 'values',
 				host: 'cluster0.mongodb.net',
-				user: 'atlasuser',
-				password: 'atlaspass',
+				user: 'dummyuser',
+				password: 'dummypass',
 				database: 'atlasdb',
 			});
 
@@ -123,7 +123,7 @@ describe('VectorStoreMongoDBAtlas', () => {
 
 			expect(MockMongoClient).toHaveBeenCalledTimes(1);
 			expect(MockMongoClient).toHaveBeenCalledWith(
-				'mongodb+srv://atlasuser:atlaspass@cluster0.mongodb.net',
+				'mongodb+srv://dummyuser:dummypass@cluster0.mongodb.net',
 				{
 					appName: 'devrel.integration.n8n_vector_integ',
 					driverInfo: {

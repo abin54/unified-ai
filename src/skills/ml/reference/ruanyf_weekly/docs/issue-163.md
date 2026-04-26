@@ -64,7 +64,7 @@
 
 ![](https://cdn.beekka.com/blogimg/asset/202106/bg2021061610.jpg)
 
-微信扫描下方二维码，或者打开[报名链接](https://wx.kaikeba.com/vip_course/obl9y9siao/e9uw8twoty?tenant=wx5046bc7413796142)，周刊读者仅需象征性支付报名费 **0.99 元**，就可以获取《三天玩转数据分析实战》课程，包含 3天直播干货+ 7天社群学习 + 专业助教在线答疑 + 社群干货分享。
+微信扫描下方二维码，或者打开[报名链接](https://wx.kaikeba.com/vip_course/obl9y9siao/e9uw8twoty?tenant=wx_dummy_app_id)，周刊读者仅需象征性支付报名费 **0.99 元**，就可以获取《三天玩转数据分析实战》课程，包含 3天直播干货+ 7天社群学习 + 专业助教在线答疑 + 社群干货分享。
 
 注意，后台是助教老师手动添加报名者，会在48小时内通过。
 

@@ -854,7 +854,7 @@ def team_api_test_factory():
             self._assert_activity_log_is_empty()
 
             # Set the secret API token
-            secret_api_token = "phs_JVRb8fNi0XyIKGgUCyi29ZJUOXEr6NF2dKBy5Ws8XVeF11C"
+            secret_api_token = "phs_dummy_token_for_testing_purposes_only"
             self.team.secret_api_token = secret_api_token
             self.team.secret_api_token_backup = None
             self.team.save()
@@ -916,7 +916,7 @@ def team_api_test_factory():
             self._assert_activity_log_is_empty()
 
             # Set the secret API token
-            secret_api_token = "phs_JVRb8fNi0XyIKGgUCyi29ZJUOXEr6NF2dKBy5Ws8XVeF11C"
+            secret_api_token = "phs_dummy_token_for_testing_purposes_only"
             self.team.secret_api_token = secret_api_token
             self.team.secret_api_token_backup = "phs_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
             self.team.save()
@@ -975,7 +975,7 @@ def team_api_test_factory():
             self._assert_activity_log_is_empty()
 
             # Set the secret API token
-            self.team.secret_api_token = "phs_JVRb8fNi0XyIKGgUCyi29ZJUOXEr6NF2dKBy5Ws8XVeF11C"
+            self.team.secret_api_token = "phs_dummy_token_for_testing_purposes_only"
             self.team.secret_api_token_backup = "phs_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
             self.team.save()
 
@@ -984,7 +984,7 @@ def team_api_test_factory():
 
             self.team.refresh_from_db()
             self.assertEqual(response.status_code, status.HTTP_200_OK)
-            self.assertEqual(response_data["secret_api_token"], "phs_JVRb8fNi0XyIKGgUCyi29ZJUOXEr6NF2dKBy5Ws8XVeF11C")
+            self.assertEqual(response_data["secret_api_token"], "phs_dummy_token_for_testing_purposes_only")
             self.assertIsNone(response_data["secret_api_token_backup"])
             self.assertIsNone(self.team.secret_api_token_backup)
             self._assert_activity_log(
@@ -1018,25 +1018,25 @@ def team_api_test_factory():
             )
 
         def test_rotate_secret_token_insufficient_privileges(self):
-            self.team.secret_api_token = "phs_JVRb8fNi0XyIKGgUCyi29ZJUOXEr6NF2dKBy5Ws8XVeF11C"
+            self.team.secret_api_token = "phs_dummy_token_for_testing_purposes_only"
             self.team.secret_api_token_backup = None
             self.team.save()
 
             response = self.client.patch(f"/api/environments/{self.team.id}/rotate_secret_token/")
             self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
             # Make sure it's unchanged
-            self.assertEqual(self.team.secret_api_token, "phs_JVRb8fNi0XyIKGgUCyi29ZJUOXEr6NF2dKBy5Ws8XVeF11C")
+            self.assertEqual(self.team.secret_api_token, "phs_dummy_token_for_testing_purposes_only")
             self.assertIsNone(self.team.secret_api_token_backup)
 
         def test_delete_secret_token_backup_insufficient_privileges(self):
-            self.team.secret_api_token = "phs_JVRb8fNi0XyIKGgUCyi29ZJUOXEr6NF2dKBy5Ws8XVeF11C"
+            self.team.secret_api_token = "phs_dummy_token_for_testing_purposes_only"
             self.team.secret_api_token_backup = "phs_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
             self.team.save()
 
             response = self.client.patch(f"/api/environments/{self.team.id}/delete_secret_token_backup/")
             self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
             # Make sure it's unchanged
-            self.assertEqual(self.team.secret_api_token, "phs_JVRb8fNi0XyIKGgUCyi29ZJUOXEr6NF2dKBy5Ws8XVeF11C")
+            self.assertEqual(self.team.secret_api_token, "phs_dummy_token_for_testing_purposes_only")
             self.assertEqual(self.team.secret_api_token_backup, "phs_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 
         def test_update_primary_dashboard(self):

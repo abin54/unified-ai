@@ -21,20 +21,21 @@ const ProviderMappings: Record<
 > = {
     aws: {
         fileUrlPatternPlaceholder: 'eg: https://your-org.s3.amazonaws.com/airbyte/stripe/invoices/*.pqt',
-        accessKeyPlaceholder: 'eg: AKIAIOSFODNN7EXAMPLE',
+        accessKeyPlaceholder: 'your-access-key',
         accessKeyLabel: 'Access key',
         accessSecretLabel: 'Access secret',
     },
     'google-cloud': {
         fileUrlPatternPlaceholder: 'eg: https://storage.googleapis.com/your-org/airbyte/stripe/invoices/*.pqt',
-        accessKeyPlaceholder: 'eg: GOOGTS7C7FUP3AIRVEXAMPLE',
+        accessKeyPlaceholder: 'your-access-id',
         accessKeyLabel: 'Access ID',
         accessSecretLabel: 'Secret',
     },
     'cloudflare-r2': {
         fileUrlPatternPlaceholder: 'eg: https://your-account-id.r2.cloudflarestorage.com/airbyte/stripe/invoices/*.pqt',
-        accessKeyPlaceholder: 'eg: AKIAIOSFODNN7EXAMPLE',
+        accessKeyPlaceholder: 'your-access-key',
         accessKeyLabel: 'Access key',
+
         accessSecretLabel: 'Access secret',
     },
     azure: {
@@ -156,7 +157,7 @@ export function SelfManagedSourceForm({ onUpdate }: Props): JSX.Element {
                             data-attr="access-secret"
                             className="ph-ignore-input"
                             type="password"
-                            placeholder="eg: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+                            placeholder="your-secret-key"
                             autoComplete="off"
                             autoCapitalize="off"
                             autoCorrect="off"
