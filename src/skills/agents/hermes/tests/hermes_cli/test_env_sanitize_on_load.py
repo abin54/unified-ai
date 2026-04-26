@@ -12,7 +12,7 @@ def test_load_env_sanitizes_concatenated_lines():
     contained multiple tokens on a single line, causing the bot token
     to be duplicated 8 times.
     """
-from src.skills.agents.hermes_cli.config import load_env
+    from src.skills.agents.hermes_cli.config import load_env
 
     token = "1234567890:ABCdefGHIjklMNOpqrSTUvwxYZ123456789"
     # Simulate concatenated line: TOKEN=xxx followed immediately by another key
@@ -37,7 +37,7 @@ from src.skills.agents.hermes_cli.config import load_env
 
 def test_load_env_normal_file_unchanged():
     """A well-formed .env file should be parsed identically."""
-from src.skills.agents.hermes_cli.config import load_env
+    from src.skills.agents.hermes_cli.config import load_env
 
     content = (
         "TELEGRAM_BOT_TOKEN=mytoken123\n"
@@ -65,7 +65,7 @@ from src.skills.agents.hermes_cli.config import load_env
 
 def test_env_loader_sanitizes_before_dotenv():
     """Verify env_loader._sanitize_env_file_if_needed fixes corrupted files."""
-from src.skills.agents.hermes_cli.env_loader import _sanitize_env_file_if_needed
+    from src.skills.agents.hermes_cli.env_loader import _sanitize_env_file_if_needed
 
     token = "1234567890:ABCdefGHIjklMNOpqrSTUvwxYZ123456789"
     corrupted = f"TELEGRAM_BOT_TOKEN={token}ANTHROPIC_API_KEY=sk-ant-test\n"
