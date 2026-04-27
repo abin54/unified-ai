@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
-		"ignoreDeprecations": "6.0",
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
 		"composite": true,
 		"module": "umd",
 		"moduleResolution": "node",
